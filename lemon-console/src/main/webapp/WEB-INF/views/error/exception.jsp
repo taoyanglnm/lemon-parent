@@ -1,0 +1,27 @@
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ include file="/common/taglibs.jsp"%>
+<!DOCTYPE html>
+<%
+      Exception e = (Exception) request.getAttribute("exception");
+%>
+<html>
+<head>
+<title>师傅，有妖怪:error</title>
+ </head>
+ <body>
+     <H2>
+           错误：<%=e.getClass().getSimpleName()%></H2>
+     <hr />
+     <P>
+         <strong>错误描述：</strong><%=e.getMessage()%>
+     </P>
+     
+     <P>
+         <strong>详细信息：</strong>
+     </P>     <pre>
+     <%
+         e.printStackTrace(new java.io.PrintWriter(out));
+     %>
+     </pre>
+ </body>
+</html>
