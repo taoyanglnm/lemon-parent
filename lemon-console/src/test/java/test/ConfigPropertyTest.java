@@ -23,4 +23,10 @@ public class ConfigPropertyTest {
         System.out.println(configProperty.getPathFile());
     }
 
+    
+    @Test
+    public void test2() {
+        System.out.println(configProperty.getPathFile());
+        System.out.println(configProperty.getPathFile());
+    }
 }
