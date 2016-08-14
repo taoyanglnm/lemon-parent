@@ -149,31 +149,26 @@
 		
 
 		<!-- CKFinder begin -->
-		<dependency>
+		 <dependency>
 			<groupId>net.coobird</groupId>
 			<artifactId>thumbnailator</artifactId>
-			<version>0.4.2</version>
 		</dependency>
-		<dependency>
+		 <dependency>
 			<groupId>com.ckfinder</groupId>
 			<artifactId>apache-ant-zip</artifactId>
-			<version>2.3</version>
-		</dependency>
+		</dependency> 
 		<dependency>
 			<groupId>com.ckfinder</groupId>
 			<artifactId>ckfinder</artifactId>
-			<version>2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.ckfinder</groupId>
 			<artifactId>ckfinderplugin-fileeditor</artifactId>
-			<version>2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.ckfinder</groupId>
 			<artifactId>ckfinderplugin-imageresize</artifactId>
-			<version>2.3</version>
-		</dependency>
+		</dependency> 
 		<!-- CKFinder end -->
 		
 		
