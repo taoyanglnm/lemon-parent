@@ -20,7 +20,8 @@
     -->  
     <baseDir></baseDir>  
     <!-- 这里是ckfinder上传文件的跟路径，这里要格外主要，如果要发布的webapp是ROOT的话，则不用加context的名称，如果不是ROOT则要加上 -->  
-    <baseURL>/upload/</baseURL>  
+    <!-- TODO:  这里如果改成相对路径图片具体的路径,目前未找到好的办法 -->
+    <baseURL>http://localhost:8081/lemon/upload/</baseURL>  
     <licenseKey></licenseKey>  
     <licenseName></licenseName>  
     <!--  

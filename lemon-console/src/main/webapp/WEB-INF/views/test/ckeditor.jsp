@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>  
 <%@ include file="/common/taglibs.jsp"%> 
-<%--  <%@ taglib uri="http://ckfinder.com" prefix="ckfinder" %>  
-<%@ taglib uri="http://ckeditor.com" prefix="ckeditor" %>   --%>
+ <%-- <%@ taglib uri="http://ckfinder.com" prefix="ckfinder" %>  
+<%@ taglib uri="http://ckeditor.com" prefix="ckeditor" %>  --%>  
 <!DOCTYPE html>
 <html>  
   <head>  
@@ -45,16 +45,29 @@
    <textarea cols="80" id="editor1" name="editor1" rows="10"></textarea>  
    <input type="submit" value="Submit" />  
 </form>  
-<ckfinder:setupCKEditor basePath="/lemon/static/ckfinder/" editor="editor1" />  
+<!-- <ckfinder:setupCKEditor basePath="/lemon/static/ckfinder/" editor="editor1" />  
 <ckeditor:replace replace="editor1" basePath="/lemon/static/ckeditor/" />  
- 
-
+  -->
+<%-- <ckfinder:setupCKEditor  basePath="/lemon/static/ckfinder/"  editor="editor1"/>  <!---注意：这里的sitenav为我的项目名称，请换成自己的项目名--->
+<ckeditor:replace replace="editor1" basePath="${ctx}/static/ckeditor"></ckeditor:replace>
+ --%>
 
 <textarea id ="post_content" name="post_content"><p>编辑器内容</p></textarea>
   
 <script type="text/javascript">
       var editor = CKEDITOR.replace('post_content');          // 创建编辑器
-      CKFinder.setupCKEditor(editor,"/lemon/static/ckeditor/");   // 为编辑器绑定"上传控件"
+      
+      //editor.basePath="/lemon/static/ckeditor/";
+      //CKFinder.setupCKEditor(editor,"static/ckeditor/");   // 为编辑器绑定"上传控件"
+      
+      //editor.BasePath = "/lemon/static/ckfinder/";
+      //CKFinder.setupCKEditor(editor, "${ctx}/static/ckfinder/");//相对路径
+
+		
+		
+		
+      
+      
 </script>
 
 	
