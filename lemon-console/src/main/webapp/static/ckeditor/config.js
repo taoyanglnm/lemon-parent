@@ -3,7 +3,7 @@
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
-/*  注意配置绝对路径 ,虚拟路径:ckfinder/core/connector/java/connector.java */
+/*  注意1.配置绝对路径 ,2.虚拟路径:ckfinder/core/connector/java/connector.java */
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';

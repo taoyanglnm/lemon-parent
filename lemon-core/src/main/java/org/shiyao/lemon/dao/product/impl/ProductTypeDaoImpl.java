@@ -41,6 +41,19 @@ public class ProductTypeDaoImpl extends BaseDao<ProductType> implements	ProductT
 		return this.list(hql, parentid);
 	}
 	
+	
+	/**
+	 * 获取所有类别
+	 * @return
+	 */
+	@Override
+	public List<ProductType> findAll(){
+		String hql="from ProductType o";
+		return this.list(hql);
+	}
+	
+	
+	
 	@Override
 	public void delete(Integer typeid) {
 		  super.delete(typeid);

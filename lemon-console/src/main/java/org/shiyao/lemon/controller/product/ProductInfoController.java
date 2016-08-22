@@ -41,6 +41,10 @@ public class ProductInfoController {
 	@Resource
 	private BrandService brandService;
 	
+	@Resource
+	private ProductTypeService productTypeService;
+	
+	
 	/**　列表　*/
 	@RequestMapping
 	public ModelAndView index(){
@@ -59,6 +63,12 @@ public class ProductInfoController {
 		 
 		 List<Brand> brands = brandService.getBrands();
 		 model.addAttribute("brands", brands);
+		 
+		 
+		 List<ProductType> productTypes = productTypeService.findAll();
+		 model.addAttribute("productTypes", productTypes);
+		 
+		 
 		 
 		 return new ModelAndView("/product/productInfo-input");
 	 }

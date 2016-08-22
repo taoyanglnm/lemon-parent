@@ -166,9 +166,10 @@
 											
 									
 								  <div class="form-group"> 
-								      <label for="models" class="col-md-1 control-label">型号</label>
+								      <label for="model" class="col-md-1 control-label">型号</label>
 								      <div class="col-sm-3">
-								      <input class="form-control m-bot15" type="text" placeholder="尺码/库存数;" name="models">
+								        <%-- <input class="form-control m-bot15" type="text" placeholder="尺码/库存数;" name="model" value="${productInfo.model}"> --%>
+								        <form:input type="text" class="form-control" id="model" path="model" placeholder="尺码/库存数;"/>
 								      </div>
 								   </div>
 								   
@@ -182,7 +183,10 @@
 								          <a href="#myModal-1" data-toggle="modal" class="btn btn-xs btn-warning">
                                             &nbsp;选 择...&nbsp;
                                            </a> 
-                                           <span>选择中的类别名称</span>
+                                           <span id="productTypeName" style="font-weight:bold;">选中的类别名称:${productInfo.type.name}</span>  
+                                                                                    
+                                          <!--  <input class="form-control m-bot15" type="hidden"  name="type.typeid" id="productTypeId"> -->
+                                           <form:input type="hidden" class="form-control" id="productTypeId" path="type.typeid"/>
 								      </div>
 								   </div>
 								   
@@ -244,25 +248,18 @@
                                         <h4 class="modal-title">产品类别</h4>
                                     </div>
                                     <div class="modal-body">
-                                      
-                                      
-                                       
-                                       
                                        
                                         <form class="form-horizontal" role="form">
                                             <div class="form-group"> 
-                                               <label class="checkbox-inline">                                        
-                                              <input type="checkbox" name="productype"><span class="label label-danger">女装 </span>
-                                              </label>
-                                              
-                                              <label class="checkbox-inline">
-                                              <input type="checkbox" name="productype"> <span class="label label-danger">男装</span>
-                                              </label>
-                                              
-                                              <label class="checkbox-inline">
-                                              <input type="checkbox" name="productype"><span class="label label-danger">夏季女上衣</span>
-                                              </label>
-                                              
+                                            
+                                             <c:forEach items="${productTypes}" var="productType">
+                                                <label class="checkbox-inline" style="margin: 4px 0px;" ondblclick="selectedProductType('${productType.typeid}','${productType.name}')">                                        
+                                                  <span class="label label-success">
+                                                     <input type="checkbox" name="productype" value="${productType.typeid}" />${productType.name}
+                                                  </span>
+                                                </label>
+                                             </c:forEach>
+                                             
                                             </div>
                                             
                                             <div class="form-group">
@@ -316,6 +313,14 @@
  	   $('#inputForm').submit(); 
  	   
     }
+     
+     
+     //选中类别，并关闭弹出窗口
+     function selectedProductType(typeId,typeName){
+    	 $("#productTypeName").html(typeName);
+    	 $("#productTypeId").val(typeId);
+    	 $(".close").trigger("click");    	 
+     }
     
     </script>
    

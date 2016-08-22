@@ -22,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.shiyao.lemon.model.Gender;
+import org.springframework.util.StringUtils;
 
 /**
  * 产品信息
@@ -101,7 +102,34 @@ public class ProductInfo implements Serializable {
 	/** 商品型号  ,S M L* */
 	private Set<ProductModel> models = new HashSet<ProductModel>();
 	
+	
+	/** 商品型号    接收页面传过来的字符串  临时字段 对应models* */
+	private String model;
 
+	
+	@Transient
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		if(StringUtils.hasText(model)){
+			String[] sizeInventorys = model.split(";");
+			for(String sizeInventory : sizeInventorys){
+				String[] si = sizeInventory.split("/");
+				if(si.length==2){
+					String size = si[0];
+					String inventory = si[1];
+					ProductModel pm  = new ProductModel(size,Integer.valueOf(inventory));
+					models.add(pm);
+				}				
+			}	
+		}
+		
+		this.model = model;
+	}
+	
+	
 	
 
 	/**节省的价钱**/

@@ -1,5 +1,7 @@
 package org.shiyao.lemon.service.product.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.shiyao.lemon.dao.product.ProductTypeDao;
@@ -18,6 +20,13 @@ public class ProductTypeServiceImpl implements ProductTypeService{
 	public Pager<ProductType> finds(Integer perantTypeid){
 		return productTypeDao.finds(perantTypeid);
 	}
+	
+	
+	@Override
+	public List<ProductType> findAll(){
+		return productTypeDao.findAll();
+	}
+	
 	
    public ProductType get(Integer typeid){
 	   return productTypeDao.get(typeid);

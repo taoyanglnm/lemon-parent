@@ -11,4 +11,5 @@ public interface ProductTypeDao extends IBaseDao<ProductType> {
 	public ProductType get(Integer typeid);
 	public List<ProductType> getChildtypes(Integer parentid);
 	public void delete(Integer typeid);
+	List<ProductType> findAll();
 }

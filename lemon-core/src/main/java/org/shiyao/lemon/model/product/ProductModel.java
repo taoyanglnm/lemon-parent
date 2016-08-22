@@ -29,6 +29,18 @@ public class ProductModel implements Serializable{
 	
 	private ProductInfo product;
 	
+	
+	
+	
+	public ProductModel(){}
+	public ProductModel(String size, Integer inventory) {
+		super();
+		this.size = size;
+		this.inventory = inventory;
+	}
+	
+	
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
