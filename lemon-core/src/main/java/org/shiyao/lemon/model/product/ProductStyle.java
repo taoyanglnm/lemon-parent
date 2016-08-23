@@ -13,14 +13,21 @@ import javax.persistence.Transient;
 
 /**
  * 产品样式
+ * 
+ * 例子：
+ *  白色衬衫：5张图片
+ *  灰色衬衫：5张图片
+ * 
  * @author tao.yang
  *
  */
 @Entity
 public class ProductStyle implements Serializable {
 	private Integer id;
-	private String name;
-	private String imageName;
+	private String name; //样式名称	
+	private String images; //图片名称，多个使用";"分割
+	
+	
 	private Boolean visible = true;
     private ProductInfo product;
     
@@ -30,9 +37,19 @@ public class ProductStyle implements Serializable {
 		this.id = id;
 	}
 
-	public ProductStyle(String name, String imageName) {
+	public ProductStyle(String name, String images) {
 		this.name = name;
-		this.imageName = imageName;
+		this.images = images;
+	}
+	
+	
+	
+	public String getImages() {
+		return images;
+	}
+
+	public void setImages(String images) {
+		this.images = images;
 	}
 
 	@ManyToOne(cascade=CascadeType.REFRESH,optional=false)
@@ -64,14 +81,7 @@ public class ProductStyle implements Serializable {
 		this.name = name;
 	}
 
-	@Column(length = 100, nullable = false)
-	public String getImageName() {
-		return imageName;
-	}
 
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
 
 	@Column(nullable = false)
 	public Boolean getVisible() {
@@ -85,8 +95,8 @@ public class ProductStyle implements Serializable {
 	 //@Transient >>>此注解表示不需要跟数据库映射的
 	@Transient
 	public String getImageFullPath(){
-		return "/image/uploadfile/"+ this.product.getType().getTypeid()+"/"+
-		        this.product.getId()+"/prototype/"+this.imageName;
+		return "/upload/images/"+ this.product.getType().getTypeid()+"/"+
+		        this.product.getId()+"/prototype/"+this.images;
 	} 
 	
 	@Override

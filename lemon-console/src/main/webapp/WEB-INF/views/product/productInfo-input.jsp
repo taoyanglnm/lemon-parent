@@ -28,6 +28,17 @@
     <!-- 放到页面尾好像不能显示 -->
     <script src="${ctx}/static/ckeditor/ckeditor.js"></script>
     <script src="${ctx}/static/ckfinder/ckfinder.js"></script>
+    
+    
+    
+    <style type="text/css">
+    
+      .ifile {
+        margin: 5px 0px;
+        display: none;
+      }
+    
+    </style>
  
 </head>
 <body style="overflow-x:hidden;">
@@ -50,7 +61,7 @@
                           <div class="panel-body">
                               
 								<!-- form start-->
-								<form:form class="form-horizontal" role="form" modelAttribute="productInfo"  method="PUT" action="${ctx}/productInfo/" id="inputForm">
+								<form:form class="form-horizontal" role="form" modelAttribute="productInfo"  method="PUT" action="${ctx}/productInfo/" id="inputForm"  enctype="multipart/form-data">
 								  
 								  
 								   <div class="form-group"> 
@@ -179,14 +190,11 @@
 								  <div class="form-group"> 
 								      <label for="type.typeid" class="col-md-1 control-label">类别</label>
 								      <div class="col-sm-3">
-								         
-								          <a href="#myModal-1" data-toggle="modal" class="btn btn-xs btn-warning">
-                                            &nbsp;选 择...&nbsp;
-                                           </a> 
-                                           <span id="productTypeName" style="font-weight:bold;">选中的类别名称:${productInfo.type.name}</span>  
-                                                                                    
-                                          <!--  <input class="form-control m-bot15" type="hidden"  name="type.typeid" id="productTypeId"> -->
+                                           <form:input class="form-control m-bot15" type="text"  path="type.name" id="productTypeName" readonly="true"/> 
                                            <form:input type="hidden" class="form-control" id="productTypeId" path="type.typeid"/>
+                                           <a href="#myModal-1" data-toggle="modal" class="btn btn-xs btn-warning" >
+                                            &nbsp;选 择...&nbsp;
+                                           </a>
 								      </div>
 								   </div>
 								   
@@ -196,8 +204,47 @@
 								   
 								  <div class="form-group"> 
 								      <label for="styles" class="col-md-1 control-label">样式</label>
-								      <div class="col-sm-3">
-								         <form:errors path="styles" cssStyle="color:red"/>
+								      <div class="col-sm-6">
+								      
+								        <%--  <img alt="" src="${ctx}/upload/images/6QGT14101-1_95x120_90.jpg">
+								         <img alt="" src="${ctx}/upload/images/6QGT14101-15_95x120_90.jpg">
+								         <img alt="" src="${ctx}/upload/images/6QGT14101-2_95x120_90.jpg">
+								         <img alt="" src="${ctx}/upload/images/6QGT14101-3_95x120_90.jpg">
+								         <img alt="" src="${ctx}/upload/images/6QGT14101-4_95x120_90.jpg"> --%>
+								         
+								          <div class="col-sm-2">
+								           <div><img id="image1" width="95" height="120" /></div>
+										   <input id="file1" type="file"  class="ifile" style="display: none;" name="images"/>
+										   <a onclick="$('input[id=file1]').click();" class="btn btn-xs btn-warning"  style="margin: 5px 0px;">选择图片</a>
+										  </div>
+										  
+										   <div class="col-sm-2">
+										    <div ><img id="image2" width="95" height="120" /></div>
+										    <input id="file2" type="file"  class="ifile"  style="display: none;" name="images"/>
+										    <a onclick="$('input[id=file2]').click();" class="btn btn-xs btn-warning"  style="margin: 5px 0px;">选择图片</a>
+										   </div>
+										  
+										   <div class="col-sm-2">
+										    <div ><img id="image3" width="95" height="120" /></div>
+										    <input id="file3" type="file"  class="ifile"  style="display: none;" name="images"/>
+										    <a onclick="$('input[id=file3]').click();" class="btn btn-xs btn-warning"  style="margin: 5px 0px;">选择图片</a>
+										   </div>
+										   
+										  <div class="col-sm-2">
+										    <div ><img id="image4" width="95" height="120" /></div>
+										    <input id="file4" type="file"  class="ifile"  style="display: none;" name="images"/>
+										    <a onclick="$('input[id=file4]').click();" class="btn btn-xs btn-warning"  style="margin: 5px 0px;">选择图片</a>
+										   </div>
+										   
+										   
+										   <div class="col-sm-2">
+										    <div ><img id="image5" width="95" height="120" /></div>
+										    <input id="file5" type="file"  class="ifile" style="display: none;" name="images"/>
+										    <a onclick="$('input[id=file5]').click();" class="btn btn-xs btn-warning"  style="margin: 5px 0px;">选择图片</a>
+										   </div>
+								         
+								         <form:errors path="styles" cssStyle="color:red"/>	
+								         <span style="margin: 0px 10px;">(95 × 120)</span>							         
 								      </div>
 								  </div>
 								   							   
@@ -291,7 +338,29 @@
     <!--common script for all pages-->
     <script src="${ctx}/res/js/common-scripts.js"></script>
     
+
+ 
+    <!-- 上次js报错Cannot read property ‘msie’ of undefined -->
+    <!-- 引入migrate.js，这样就能保证jquery以前的功能可以用 -->
+     <script src="http://code.jquery.com/jquery-migrate-1.1.1.js"></script> 
+    
+     <script src="${ctx}/res/script/upload.js"></script>
+     
+     
+     
     <script type="text/javascript">
+    
+    
+    $(function () {
+    	$("#file1").uploadPreview({ Img: "image1", Width: 95, Height: 120 });
+    	$("#file2").uploadPreview({ Img: "image2", Width: 95, Height: 120 });
+    	$("#file3").uploadPreview({ Img: "image3", Width: 95, Height: 120 });
+    	$("#file4").uploadPreview({ Img: "image4", Width: 95, Height: 120 });
+    	$("#file5").uploadPreview({ Img: "image5", Width: 95, Height: 120 });
+    });
+    
+    
+    
     
     
     /*
@@ -317,14 +386,20 @@
      
      //选中类别，并关闭弹出窗口
      function selectedProductType(typeId,typeName){
-    	 $("#productTypeName").html(typeName);
+    	 $("#productTypeName").val(typeName);
     	 $("#productTypeId").val(typeId);
     	 $(".close").trigger("click");    	 
      }
     
+     
+     
+   
     </script>
    
+   <script type="text/javascript">
 
+   
+   </script>
 
     
     
