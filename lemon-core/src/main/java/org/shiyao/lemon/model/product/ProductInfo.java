@@ -33,10 +33,11 @@ import org.springframework.util.StringUtils;
 public class ProductInfo implements Serializable {
 
 	private static final long serialVersionUID = 7285467881441102644L;
+	
 	private Integer id;
 	/** 货号* */
 	private String code;
-	/** 产品名称* */
+	/** 产品名称 * */
 	private String name;
 	/** 品牌* */
 	private Brand brand;

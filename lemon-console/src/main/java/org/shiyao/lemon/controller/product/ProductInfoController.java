@@ -14,6 +14,7 @@ import org.shiyao.lemon.model.product.Brand;
 import org.shiyao.lemon.model.product.ProductInfo;
 import org.shiyao.lemon.model.product.ProductType;
 import org.shiyao.lemon.service.product.BrandService;
+import org.shiyao.lemon.service.product.ProductInfoService;
 import org.shiyao.lemon.service.product.ProductTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,9 @@ public class ProductInfoController {
 	
 	@Resource
 	private ProductTypeService productTypeService;
+	
+	@Resource
+	private ProductInfoService  productInfoService;
 	
 	
 	/**　列表　*/
@@ -102,6 +106,12 @@ public class ProductInfoController {
 	        }
 		 
 		 
+		  productInfo = productInfoService.save(productInfo);
+		  
+		  System.out.println(JSON.toJSONString(productInfo));
+		  
+		  
+		  
 		 return new ModelAndView("/product/productInfo-input");
 	 }
 

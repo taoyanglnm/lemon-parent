@@ -242,9 +242,12 @@
 										    <input id="file5" type="file"  class="ifile" style="display: none;" name="images"/>
 										    <a onclick="$('input[id=file5]').click();" class="btn btn-xs btn-warning"  style="margin: 5px 0px;">选择图片</a>
 										   </div>
-								         
-								         <form:errors path="styles" cssStyle="color:red"/>	
-								         <span style="margin: 0px 10px;">(95 × 120)</span>							         
+										   
+								          <div class="col-sm-2" style="height: 120;width:95;">
+								            <form:errors path="styles" cssStyle="color:red"/>	
+								            <span>(95 × 120)</span>
+								          </div>
+								         							         
 								      </div>
 								  </div>
 								   							   
