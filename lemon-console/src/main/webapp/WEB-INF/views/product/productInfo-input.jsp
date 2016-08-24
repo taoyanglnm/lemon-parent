@@ -205,12 +205,6 @@
 								  <div class="form-group"> 
 								      <label for="styles" class="col-md-1 control-label">样式</label>
 								      <div class="col-sm-6">
-								      
-								        <%--  <img alt="" src="${ctx}/upload/images/6QGT14101-1_95x120_90.jpg">
-								         <img alt="" src="${ctx}/upload/images/6QGT14101-15_95x120_90.jpg">
-								         <img alt="" src="${ctx}/upload/images/6QGT14101-2_95x120_90.jpg">
-								         <img alt="" src="${ctx}/upload/images/6QGT14101-3_95x120_90.jpg">
-								         <img alt="" src="${ctx}/upload/images/6QGT14101-4_95x120_90.jpg"> --%>
 								         
 								          <div class="col-sm-2">
 								           <div><img id="image1" width="95" height="120" /></div>

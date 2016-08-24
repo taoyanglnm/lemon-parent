@@ -1,4 +1,4 @@
-package test;
+package org.lnm.test;
 import javax.annotation.Resource;
 
 import org.junit.Test;

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository("brandDao")
-class BrandDaoImpl extends BaseDao<Brand> implements BrandDao {
+public class BrandDaoImpl extends BaseDao<Brand> implements BrandDao {
 	
 	@Override
     public Pager<Brand> finds(){

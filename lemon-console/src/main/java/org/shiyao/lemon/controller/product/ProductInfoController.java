@@ -2,19 +2,26 @@ package org.shiyao.lemon.controller.product;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.io.FileUtils;
+import org.shiyao.lemon.common.Sequence;
 import org.shiyao.lemon.model.Pager;
 import org.shiyao.lemon.model.product.Brand;
 import org.shiyao.lemon.model.product.ProductInfo;
+import org.shiyao.lemon.model.product.ProductModel;
+import org.shiyao.lemon.model.product.ProductStyle;
 import org.shiyao.lemon.model.product.ProductType;
 import org.shiyao.lemon.service.product.BrandService;
 import org.shiyao.lemon.service.product.ProductInfoService;
+import org.shiyao.lemon.service.product.ProductModelService;
+import org.shiyao.lemon.service.product.ProductStyleService;
 import org.shiyao.lemon.service.product.ProductTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +60,23 @@ public class ProductInfoController {
 	private ProductInfoService  productInfoService;
 	
 	
+	@Resource
+	private ProductModelService productModelService;
+	
+	
+	@Resource
+	private ProductStyleService  productStyleService;
+	
+	
+	
+	/**
+	 * 图片保存上下文
+	 */
+	private String imgctx="/upload/images/";
+	
+	
+	
+	
 	/**　列表　*/
 	@RequestMapping
 	public ModelAndView index(){
@@ -84,36 +108,97 @@ public class ProductInfoController {
 		
 	 @RequestMapping(method=RequestMethod.POST)  
 	 public ModelAndView create(@Valid ProductInfo productInfo,BindingResult bindingResult,
-			 @RequestParam(value = "images", required = false) MultipartFile[] images,HttpServletRequest request){
+			 @RequestParam(value = "images", required = false) MultipartFile[] images,HttpServletRequest request,Model model) throws IOException{
 		 
 		 logger.debug("保存新增产品");
 		 System.out.println(JSON.toJSONString(productInfo));
 		 
+		  if (bindingResult.hasErrors()){
+			 // return _new(model);
+			  return new ModelAndView("/product/productInfo-input");
+		  }
 		 
 		 
-		  for(MultipartFile myfile : images){  
-	            if(myfile.isEmpty()){  
-	                System.out.println("文件未上传");  
-	            }else{  
-	                System.out.println("文件长度: " + myfile.getSize());  
-	                System.out.println("文件类型: " + myfile.getContentType());  
-	                System.out.println("文件名称: " + myfile.getName());  
-	                System.out.println("文件原名: " + myfile.getOriginalFilename());  
-	                System.out.println("========================================");  
-	                //String realPath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");  
-	                //FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath, myfile.getOriginalFilename()));  
-	            }  
-	        }
+		 Set<ProductModel> models = productInfo.getModels();
+		 ProductType productType = productInfo.getType();	
 		 
 		 
 		  productInfo = productInfoService.save(productInfo);
 		  
-		  System.out.println(JSON.toJSONString(productInfo));
+		  
+		  for(ProductModel productModel :models ){
+			  productModel.setProduct(productInfo);
+			  productModelService.save(productModel);
+		  }
+		
+		  
+		  Long productId = productInfo.getId();
+		  Integer typeid = productType.getTypeid();
+		  String image ="";
+		 
 		  
 		  
+		  for(MultipartFile myfile : images){  
+	            if(myfile.isEmpty()){  
+	            	 logger.error("没有产品样式图片");  
+	            	 
+	            	 
+	            	 
+	            }else{  	            	
+	            	
+	                String realPath = request.getSession().getServletContext().getRealPath(imgctx);
+	                String imagePath = typeid+"/"+productId+"/prototype/"+Sequence.date()+getFileSuffix(myfile.getOriginalFilename());
+	                
+	                FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath, imagePath));  
+	                
+	                 image+=imgctx+imagePath+";";
+	            	
+	            	 logger.debug("文件长度: " + myfile.getSize());  
+	            	 logger.debug("文件类型: " + myfile.getContentType());  
+	            	 logger.debug("文件名称: " + myfile.getName());  
+	            	 logger.debug("文件原名: " + myfile.getOriginalFilename());
+	                 logger.debug("文件保存: " +imgctx+imagePath);
+	                 logger.debug("========================================");  
+	                
+	                
+	               
+	            }  
+	        }
+	
 		  
-		 return new ModelAndView("/product/productInfo-input");
+		  ProductStyle   productStyle = new ProductStyle();
+		  productStyle.setImages(image);
+		  productStyle.setName(productInfo.getName());//这里暂时写产品名称，正常应该页面输入
+		  productStyle.setProduct(productInfo);
+		  
+		  productStyleService.save(productStyle);		  
+		  
+		 return new ModelAndView("redirect:/productInfo");
 	 }
+	 
+	 
+	 public static void main(String[] args) {
+		String img = "jfisdf324.jpg";
+		int point = img.lastIndexOf(".");		
+		String suffix = img.substring(point);
+		System.out.println(suffix);
+	}
+	 
+	 
+	 
+	 
+	 
+	 
+	 /**
+	  * 获取文件名称后缀 返回值包含点
+	  * @param name
+	  * @return
+	  */
+	 private String getFileSuffix(String name){
+		 int point = name.lastIndexOf(".");		
+	     return name.substring(point);
+	 }
+	 
 
 	
 }

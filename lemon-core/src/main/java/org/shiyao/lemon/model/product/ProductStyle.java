@@ -43,7 +43,7 @@ public class ProductStyle implements Serializable {
 	}
 	
 	
-	
+	@Column(length=1000)
 	public String getImages() {
 		return images;
 	}

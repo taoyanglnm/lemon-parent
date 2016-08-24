@@ -20,7 +20,9 @@ import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.shiyao.lemon.model.Gender;
 import org.springframework.util.StringUtils;
 
@@ -34,20 +36,25 @@ public class ProductInfo implements Serializable {
 
 	private static final long serialVersionUID = 7285467881441102644L;
 	
-	private Integer id;
+	private Long id;
 	/** 货号* */
+	@NotEmpty
 	private String code;
 	/** 产品名称 * */
+	@NotEmpty(message="The above field must not be empty.")
 	private String name;
 	/** 品牌* */
 	private Brand brand;
 	/** 型号* */
 	//private String model; 
 	/** 低价* */
+	@NotNull
 	private Float basePrice;
 	/** 市场价* */
+	@NotNull
 	private Float marketPrice;
 	/** 销售价* */
+	@NotNull(message="The above field must not be blank.")
 	private Float sellPrice;
 	/** 重量* */
 	private Integer weight;
@@ -77,7 +84,7 @@ public class ProductInfo implements Serializable {
 	
   /*	
             商品详情 也可以集成在一个字段
-            产品介绍：product introduction
+        产品介绍：product introduction
 	产品参数：product parameters
 	产品详情：product details
 	使用方法：product usage
@@ -90,13 +97,14 @@ public class ProductInfo implements Serializable {
 	//private String buyExplain;
 	
 	/** 产品介绍, 主要做一些文字说明* */
+	@NotEmpty(message = "不能为空")
 	private String introduction;
 	/** 产品详情，主要展示一些图片* */
-	private String details;
+	//private String details;
 	/** 使用方法- 购买说明* */
-	private String usage;
+	//private String usage;
 	/** 商品实拍，主要展示一些自己拍的图片* */
-	private String photos;
+	//private String photos;
 	/** 运费   如果是零，即免运费 * */
 	private Float freight;
 	
@@ -131,6 +139,8 @@ public class ProductInfo implements Serializable {
 	}
 	
 	
+
+	
 	
 
 	/**节省的价钱**/
@@ -144,17 +154,17 @@ public class ProductInfo implements Serializable {
 	
 	public ProductInfo() {}
 	
-	public ProductInfo(Integer id) {
+	public ProductInfo(Long id) {
 		this.id = id;
 	}
 
 	@Id
 	@GeneratedValue
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -249,7 +259,7 @@ public class ProductInfo implements Serializable {
 		this.buyExplain = buyExplain;
 	}*/
 
-	@Column(length = 500)
+	@Lob
     public String getIntroduction() {
 		return introduction;
 	}
@@ -258,7 +268,7 @@ public class ProductInfo implements Serializable {
 		this.introduction = introduction;
 	}
 
-	@Lob
+/*	@Lob
 	@Column(nullable = false)
 	public String getDetails() {
 		return details;
@@ -266,9 +276,9 @@ public class ProductInfo implements Serializable {
 
 	public void setDetails(String details) {
 		this.details = details;
-	}
+	}*/
 
-	@Lob
+/*	@Lob
 	@Column(nullable = true)
 	public String getUsage() {
 		return usage;
@@ -276,9 +286,9 @@ public class ProductInfo implements Serializable {
 
 	public void setUsage(String usage) {
 		this.usage = usage;
-	}
+	}*/
 	
-	@Lob
+/*	@Lob
 	@Column(nullable = true)
 	public String getPhotos() {
 		return photos;
@@ -286,7 +296,7 @@ public class ProductInfo implements Serializable {
 
 	public void setPhotos(String photos) {
 		this.photos = photos;
-	}
+	}*/
 
 
 
@@ -328,7 +338,7 @@ public class ProductInfo implements Serializable {
 		this.type = type;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreateDate() {
 		return createDate;
 	}
