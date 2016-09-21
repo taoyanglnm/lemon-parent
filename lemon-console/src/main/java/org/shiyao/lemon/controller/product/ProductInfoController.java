@@ -49,7 +49,7 @@ public class ProductInfoController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductInfoController.class);
 
-
+	
 	@Resource
 	private BrandService brandService;
 	
@@ -81,6 +81,9 @@ public class ProductInfoController {
 	@RequestMapping
 	public ModelAndView index(){
 		ModelAndView mv = new ModelAndView("/product/productInfo-list");
+		
+		
+		
 		return mv;
 	}
 	 
@@ -177,13 +180,7 @@ public class ProductInfoController {
 	 }
 	 
 	 
-	 public static void main(String[] args) {
-		String img = "jfisdf324.jpg";
-		int point = img.lastIndexOf(".");		
-		String suffix = img.substring(point);
-		System.out.println(suffix);
-	}
-	 
+
 	 
 	 
 	 

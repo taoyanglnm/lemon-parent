@@ -68,7 +68,7 @@ public class ProductInfo implements Serializable {
 	/** 上架日期* */
 	private Date createDate = new Date();
 	/** 人气指数* */
-	private Integer clickCount = 1;
+	private Integer clickCount = 0;
 	/** 销售量* */
 	private Integer sellCount = 0;
 	/** 是否推荐* */
