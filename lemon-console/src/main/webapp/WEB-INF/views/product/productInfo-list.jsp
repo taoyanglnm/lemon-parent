@@ -57,19 +57,32 @@
                               <thead>
                               <tr>
                                   <th style="width:8px;"><input type="checkbox" class="group-checkable"/></th>
-                                  <th>类别名称</th>
+                                  <th>货号</th>
+                                  <th>产品名称</th>
+                                  <th>所属品牌</th>
+                                  <th>类别</th>
+                                  <th>低价</th>
+                                  <th>市场价</th>
+                                  <th>销售价</th>
+                                  <th>运费</th>
                                   <th>是否可见</th>
-                                  <th>父类别</th>
-                                  <th>子类别</th>
-                                  <th>google描述</th>
+                                  <th>性别要求</th>
+                                 
                                   <th>操作</th>
                               </tr>
                               </thead>
                               <tbody>
 		                      <c:forEach items="${pager.datas}" var="entity">
 								<tr>
-								    <td><input type="checkbox" class="checkboxes" value="${entity.typeid}" /></td>
+								    <td><input type="checkbox" class="checkboxes" value="${entity.id}" /></td>
+								    <td>${entity.code}</td>
 								    <td>${entity.name}</td>
+								    <td>${entity.brand.name}</td>
+								    <td>${entity.type.name}</td>
+								    <td>${entity.basePrice}</td>
+								    <td>${entity.marketPrice}</td>
+								    <td>${entity.sellPrice}</td>
+								    <td>${entity.weight}</td>
 									<td>
 									<c:if test="${entity.visible eq true }">
 										<span class="emp">是</span>
@@ -78,13 +91,14 @@
 										<span class="emp">否</span>
 									</c:if>
 									</td>
-									<td><a href="${ctx}/product/type?parentId=${entity.parent.parent.typeid}">${entity.parent.name}</a></td>
-									<td><a href="${ctx}/product/type?parentId=${entity.typeid}">子类别 <span class="badge bg-inverse">${fn:length(entity.childtypes)}</span></a></td>
-									<td>${entity.note}</td>
+									
+									<td>${entity.sex}</td>
+									
+									
 									<td>
-									 <button class="btn btn-xs" onclick="crud('productInfo/${entity.typeid}','show');"><i class="icon-lemon"></i></button>
-		                             <button class="btn btn-xs" onclick="crud('productInfo/${entity.typeid}/edit','edit');"><i class="icon-pencil"></i></button>
-		                             <button class="btn btn-xs" onclick="crud('productInfo/${entity.typeid}/delete','delete');"><i class="icon-trash "></i></button>
+									 <button class="btn btn-xs" onclick="crud('productInfo/${entity.id}','show');"><i class="icon-lemon"></i></button>
+		                             <button class="btn btn-xs" onclick="crud('productInfo/${entity.id}/edit','edit');"><i class="icon-pencil"></i></button>
+		                             <button class="btn btn-xs" onclick="crud('productInfo/${entity.id}/delete','delete');"><i class="icon-trash "></i></button>
 									</td>
 								</tr>
 							 </c:forEach>	
@@ -95,7 +109,7 @@
                          <div class="col-md-offset-9" style="text-align:right;">  
                       	   <jsp:include page="../pager.jsp">
 						     <jsp:param value="${pager.total}" name="totalRecord"/>
-						     <jsp:param value="${ctx}/productinfo" name="url"/>
+						     <jsp:param value="${ctx}/productInfo" name="url"/>
 					       </jsp:include>					       
                           </div>                       
                       </section>

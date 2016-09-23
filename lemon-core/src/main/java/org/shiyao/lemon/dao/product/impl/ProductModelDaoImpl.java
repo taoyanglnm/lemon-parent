@@ -11,6 +11,13 @@ import org.springframework.stereotype.Repository;
 @Repository("productModelDao")
 public class ProductModelDaoImpl extends BaseDao<ProductModel> implements ProductModelDao {
 	
-	
+	 public  void delete(Long productId){
+		
+		 String hql="delete ProductModel o where o.product.id=:id";
+		 this.getSession().update(hql, productId);
+		 
+		 
+		 
+	 }
         
 }

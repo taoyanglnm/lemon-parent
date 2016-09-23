@@ -79,10 +79,11 @@ public class ProductInfoController {
 	
 	/**　列表　*/
 	@RequestMapping
-	public ModelAndView index(){
+	public ModelAndView index(String code,String name,String brandName,String productType){
 		ModelAndView mv = new ModelAndView("/product/productInfo-list");
 		
-		
+		Pager<ProductInfo> pager = productInfoService.finds(code, name, brandName, productType);
+		mv.addObject("pager", pager);
 		
 		return mv;
 	}
@@ -184,7 +185,21 @@ public class ProductInfoController {
 	 
 	 
 	 
-	 
+		/**删除*/
+		@RequestMapping(value="/{id}/delete")
+		public String delete(@PathVariable("id") Long id,HttpServletRequest request) {
+			 logger.debug("delete product "+id);	
+			 
+			 productInfoService.delete(id);
+			 
+			 
+			 
+			 
+			 return "redirect:/productInfo";
+		}
+		
+		
+		
 	 
 	 /**
 	  * 获取文件名称后缀 返回值包含点

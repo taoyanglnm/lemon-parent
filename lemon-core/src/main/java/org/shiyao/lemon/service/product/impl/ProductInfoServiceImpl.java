@@ -12,6 +12,8 @@ import org.shiyao.lemon.service.product.ProductInfoService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.fastjson.JSON;
+
 @Service("productInfoService")
 public class ProductInfoServiceImpl implements ProductInfoService {
 
@@ -20,17 +22,42 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	
 	
 	@Override
-	public Pager<ProductInfo> finds(ProductInfo entity) {
+	public Pager<ProductInfo> finds(String code,String name,String brandName,String productType) {
 		
-		
+		StringBuffer hql = new StringBuffer("from ProductInfo o where 1=1");
+		 
 		Map<String, Object> alias = new HashMap<String,Object>();
-		String code = entity.getCode();
+		
+		
+		
 		if(code!=null && !"".equals(code.trim())){
 			alias.put("code", code);
+			hql.append(" and o.code=:code");
+		}
+		if(name!=null && !"".equals(name)){
+			alias.put("name", name);
+			hql.append(" and o.name like :name");
+		}
+		if(brandName!=null && !"".equals(brandName)){
+			alias.put("brandName", brandName);
+			hql.append(" and o.brand.name like :brandName");
+		}
+		
+		if(productType!=null && !"".equals(productType)){
+			alias.put("productType", productType);
+			hql.append(" and o.type.name like :productType");
 		}
 		
 		
-		return productInfoDao.finds(alias);
+		
+		Pager<ProductInfo> productInfos = productInfoDao.finds(hql.toString(),alias);
+		
+		
+		//System.out.println("size="+productInfos.getDatas().size());
+		//System.out.println(JSON.toJSONString(productInfos));
+		
+		
+		return productInfos;
 	}
 	
 	
@@ -43,6 +70,13 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	@Override
 	public ProductInfo save(ProductInfo entity) {
 		return productInfoDao.add(entity);
+	}
+	
+	
+	
+	@Override
+	public void delete(Long id){
+		productInfoDao.delete(id);
 	}
 
 }
