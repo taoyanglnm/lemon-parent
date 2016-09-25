@@ -62,6 +62,15 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	
 	
 	
+	public Pager<ProductInfo> findByType(Long productType){
+		
+		
+		return null;
+	}
+	
+	
+	
+	
 	
     /**
      * sava product info

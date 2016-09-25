@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+				        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+				        http://www.springframework.org/schema/context
+				        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+				        http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+		
+
+	
+    <context:component-scan base-package="org.shiyao.lemon" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+	
+	<!-- <context:component-scan base-package="org.shiyao.lemon.controller" use-default-filters="false">
+       <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan> -->
+	
+	
+    <mvc:resources location="/res/" mapping="/res/**" />
+    <mvc:resources location="/common/" mapping="/common/**" />
+    
+	
+	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
+
+	
+	<!-- 配置 MultipartResolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="maxUploadSize" value="1024000"></property>	
+	</bean>	
+	
+	
+    <!-- 国际化 -->
+   <!--  <bean id="messageSourcex" class="org.springframework.context.support.ResourceBundleMessageSource" 
+    p:basename="i18n/messages"/>
+     -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+      <property name="basenames">
+       <list>
+         <value>i18n/messages</value>
+         <value>i18n/validation</value>       
+       </list>
+      </property>
+    </bean>
+    
+    <!-- 配置 SessionLocalResolver -->
+	<bean id="localeResolver"  class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean>
+	
+	
+
+
+    
+	
+	<mvc:interceptors>
+	  <!-- 国际化，动态改变语言： http://localhost:8081/lemon/xxx?locale=zh_CN -->    
+	  <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"></bean>
+	</mvc:interceptors>
+	
+	
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">  
+        <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>  
+        <property name="validationMessageSource" ref="messageSource"/>  
+    </bean>  
+ 
+     
+    <!-- 定义无Controller的path<->view直接映射 -->
+	<mvc:view-controller path="/" view-name="redirect:/index.jsp"/>
+	
+	<!-- http://haohaoxuexi.iteye.com/blog/1860732 -->
+	<!-- 转换器 -->
+	 <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">   
+	     <property name="converters">
+	        <set>
+	         <!-- 枚举转换器  -->
+	         <bean class="org.shiyao.lemon.converter.StringToEnumConverterFactory"></bean>
+	        </set>
+	     </property>     
+     </bean>
+     
+     
+
+    <mvc:default-servlet-handler/>
+	<mvc:annotation-driven validator="validator" conversion-service="conversionService" >
+	
+	   <!--<mvc:message-converters>
+           <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+              <property name="supportedMediaTypes">
+                	<list>
+                	  <value>application/json;charset=UTF-8</value>
+                	  <value>text/html;charset=UTF-8</value>
+                      <value>text/plain;charset=UTF-8</value>
+                	</list>
+              </property>
+          </bean> -->
+          <!--
+          <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                	<list>
+                	 <value>application/json;charset=UTF-8</value>
+                	 <value>text/html;charset=UTF-8</value>
+                     <value>text/plain;charset=UTF-8</value>
+                	</list>
+                </property>
+          </bean>
+       </mvc:message-converters>  -->
+	</mvc:annotation-driven>
+     
+     
+     
+     
+ 	<!-- 配置使用 SimpleMappingExceptionResolver 来映射异常 -->
+<!--     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		  <property name="statusCodes">     
+             <props>     
+                 <prop key="error/500">500</prop>     
+                 <prop key="error/404">404</prop>     
+             </props>     
+          </property>
+		  <property name="exceptionMappings">
+			<props>
+			    <prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop>
+				<prop key="java.lang.Throwable">error/500</prop>
+				<prop key="java.lang.RuntimeException">error/exception</prop> 
+			</props>
+			</property>
+          默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置   
+         <property name="defaultErrorView" value="error/error"></property>     
+         默认HTTP状态码     
+         <property name="defaultStatusCode" value="500"></property>
+	</bean> -->
+	
+	
+	
+	<!-- 自定义异常处理 ，继承SimpleMappingExceptionResolver-->
+    <bean class="org.shiyao.lemon.interceptor.CustomMappingExceptionResolver">
+    <!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
+    	  <property name="statusCodes">     
+             <props>     
+                 <prop key="error/500">500</prop>     
+                 <prop key="error/404">404</prop>     
+             </props>     
+          </property>
+		  <property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Throwable">error/500</prop>
+				<prop key="java.lang.RuntimeException">error/exception</prop> 
+			</props>
+			</property>
+         <property name="defaultErrorView" value="error/error"></property>     
+         <property name="defaultStatusCode" value="500"></property>
+	</bean>
+	
+</beans>

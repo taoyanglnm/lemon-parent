@@ -72,7 +72,7 @@ public class ProductStyle implements Serializable {
 		this.id = id;
 	}
 
-	@Column(length = 30, nullable = false)
+	@Column(length = 30, nullable = true)
 	public String getName() {
 		return name;
 	}

@@ -19,15 +19,19 @@ public class ProductInfoDaoImpl extends BaseDao<ProductInfo> implements ProductI
 	
 	@Override
     public Pager<ProductInfo> finds(String hql,Map<String, Object> alias){
-/*	    StringBuffer hql = new StringBuffer("from ProductInfo o where 1=1");
-	    if(alias!=null){
-	    	Set<String> keys = alias.keySet();
-			for(String key:keys) {
-				hql.append(" and o."+key+"=:"+key);
-			}
-	    }*/
-	    logger.debug(hql);
 		return this.find(hql,null, alias);
+	}
+	
+	
+	/**
+	 * 查询当前类别及只类别下的所有商品
+	 * @return
+	 */
+	public  Pager<ProductInfo> findByType(Long typeId){
+		String hql ="from ProductInfo o where o.type.typeid=?";
+		
+		return null;
+		
 	}
 	
 	

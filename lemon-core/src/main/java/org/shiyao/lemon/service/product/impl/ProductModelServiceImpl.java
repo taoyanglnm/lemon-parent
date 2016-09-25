@@ -19,5 +19,14 @@ public class ProductModelServiceImpl implements ProductModelService {
 		productModelDao.add(entity);
 
 	}
+	
+	@Override
+	public void delete(Long productId){
+		productModelDao.delete(productId);
+	}
+	
+	
+	
+	
 
 }

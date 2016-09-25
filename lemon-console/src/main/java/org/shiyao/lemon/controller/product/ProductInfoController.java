@@ -115,10 +115,8 @@ public class ProductInfoController {
 			 @RequestParam(value = "images", required = false) MultipartFile[] images,HttpServletRequest request,Model model) throws IOException{
 		 
 		 logger.debug("保存新增产品");
-		 System.out.println(JSON.toJSONString(productInfo));
 		 
 		  if (bindingResult.hasErrors()){
-			 // return _new(model);
 			  return new ModelAndView("/product/productInfo-input");
 		  }
 		 
@@ -172,7 +170,6 @@ public class ProductInfoController {
 		  
 		  ProductStyle   productStyle = new ProductStyle();
 		  productStyle.setImages(image);
-		  productStyle.setName(productInfo.getName());//这里暂时写产品名称，正常应该页面输入
 		  productStyle.setProduct(productInfo);
 		  
 		  productStyleService.save(productStyle);		  
@@ -185,13 +182,37 @@ public class ProductInfoController {
 	 
 	 
 	 
-		/**删除*/
+		/**删除
+		 * @throws IOException */
 		@RequestMapping(value="/{id}/delete")
-		public String delete(@PathVariable("id") Long id,HttpServletRequest request) {
-			 logger.debug("delete product "+id);	
+		public String delete(@PathVariable("id") Long id,HttpServletRequest request) throws IOException {
+			 logger.debug("delete product "+id);
 			 
+			 
+			 List<ProductStyle> productSytles = productStyleService.finds(id);
+			 
+
+			 //删除产品信息
 			 productInfoService.delete(id);
 			 
+			 
+			 
+			 //删除当前产品下的所有样式图片
+			 if(productSytles!=null && !productSytles.isEmpty()){
+				 
+				 ProductStyle productSytle = productSytles.get(0);
+				 String images = productSytle.getImages();
+				 
+				 if(images!=null && !"".equals(images.trim())){
+ 			    	 int endIndex = images.indexOf("prototype");
+			    	 String imagePath = images.substring(0, endIndex);
+			    	 String realPath = request.getSession().getServletContext().getRealPath("/");
+			    	 System.out.println("删除图片路径 - "+realPath+imagePath);
+			    	 FileUtils.deleteDirectory(new File(realPath,imagePath));
+			    	 
+			    }
+				 
+			 }
 			 
 			 
 			 
@@ -200,6 +221,17 @@ public class ProductInfoController {
 		
 		
 		
+		
+		
+		public static void main(String[] args) throws IOException {
+			 String images="/upload/images/1/3/prototype/20160924111409067.jpg;/upload/images/1/3/prototype/20160924111409070.jpg;/upload/images/1/3/prototype/20160924111409072.jpg;/upload/images/1/3/prototype/20160924111409074.jpg;/upload/images/1/3/prototype/20160924111409076.jpg;";
+			 int endIndex = images.indexOf("prototype");
+	    	 String productImagePath = images.substring(0, endIndex)+"prototype";
+	    	 System.out.println(productImagePath);
+	    	 FileUtils.deleteDirectory(new File(productImagePath));
+	    	 
+	    	 
+		}
 	 
 	 /**
 	  * 获取文件名称后缀 返回值包含点

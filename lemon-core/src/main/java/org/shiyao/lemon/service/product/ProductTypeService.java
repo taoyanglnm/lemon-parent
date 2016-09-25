@@ -10,5 +10,8 @@ public interface ProductTypeService {
 	public ProductType get(Integer typeid);
 	public void save(ProductType entity);
 	public void delete(Integer typeid);
-	List<ProductType> findAll();
+	public List<ProductType> findAll();
+	public List<ProductType> getSubType(Integer parentid);
+	public List<Integer> getSubTypeid(Integer parentid);
+	public List<Integer> getSubTypeids(List<Integer> parentids);
 }

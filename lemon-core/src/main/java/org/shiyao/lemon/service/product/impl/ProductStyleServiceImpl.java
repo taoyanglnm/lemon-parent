@@ -1,6 +1,8 @@
 package org.shiyao.lemon.service.product.impl;
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 
@@ -17,12 +19,22 @@ public class ProductStyleServiceImpl implements ProductStyleService {
 	@Resource
 	private ProductStyleDao productStyleDao;
 	
-  
+    @Override
 	public void save(ProductStyle entity) {
 	   productStyleDao.add(entity);
 	}
 	
+	@Override
+	public void delete(Long productId){
+		productStyleDao.delete(productId);
+	}
 	
+	
+	@Override
+	public List<ProductStyle> finds(Long productId){
+		return productStyleDao.finds(productId);
+		
+	}
 
 	
 }

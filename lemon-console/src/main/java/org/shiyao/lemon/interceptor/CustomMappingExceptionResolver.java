@@ -7,8 +7,11 @@ import java.net.URLDecoder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.shiyao.lemon.controller.product.ProductInfoController;
 import org.shiyao.lemon.pageModel.Message;
 import org.shiyao.lemon.web.I18Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
@@ -27,11 +30,20 @@ import com.alibaba.fastjson.serializer.JSONSerializer;
  */
 public class CustomMappingExceptionResolver extends SimpleMappingExceptionResolver  {
 
+	
+
+	private static final Logger logger = LoggerFactory.getLogger(CustomMappingExceptionResolver.class);
+
+	
+	
 	@Override
     protected ModelAndView doResolveException(HttpServletRequest request,
             HttpServletResponse response, Object handler, Exception ex) {
          
          
+		logger.error("错误",ex);
+		
+		
         String viewName = determineViewName(ex, request);
         
         // vm方式返回
