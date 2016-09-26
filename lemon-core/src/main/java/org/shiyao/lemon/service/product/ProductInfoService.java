@@ -8,6 +8,7 @@ public interface ProductInfoService {
 	
 	public Pager<ProductInfo> finds(String code,String name,String brandName,String productType) ;
 	
+	public Pager<ProductInfo> findByTypes(Integer typeid);
 	
 	public ProductInfo save(ProductInfo entity) ;
 	

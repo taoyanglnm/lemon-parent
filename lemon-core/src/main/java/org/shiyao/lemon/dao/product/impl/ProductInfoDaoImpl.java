@@ -1,5 +1,7 @@
 package org.shiyao.lemon.dao.product.impl;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,10 +29,14 @@ public class ProductInfoDaoImpl extends BaseDao<ProductInfo> implements ProductI
 	 * 查询当前类别及只类别下的所有商品
 	 * @return
 	 */
-	public  Pager<ProductInfo> findByType(Long typeId){
-		String hql ="from ProductInfo o where o.type.typeid=?";
+	@Override
+	public  Pager<ProductInfo> findByType(List<Integer> typeIds){
+		Map<String, Object> alias = new HashMap<String,Object>();
+		alias.put("typeIds", typeIds);
 		
-		return null;
+		String hql ="from ProductInfo o where o.type.typeid in (:typeIds)";
+		
+		return this.find(hql,null, alias);
 		
 	}
 	

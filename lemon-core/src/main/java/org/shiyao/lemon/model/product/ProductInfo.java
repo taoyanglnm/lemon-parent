@@ -1,8 +1,10 @@
 package org.shiyao.lemon.model.product;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -78,6 +80,29 @@ public class ProductInfo implements Serializable {
 	/** 产品样式* */
 	private Set<ProductStyle> styles = new HashSet<ProductStyle>();
 	
+	
+	
+	/** 商品样式styles 第一张图片路径 ， 用于页面列表展示图片   临时字段**/
+	private String showStyle;
+	
+
+	
+	
+	/** 商品品牌logo  在图片左上角展示 * */
+	private String logo;
+	
+	
+	/** 商品名称logo 在产品名称前面展示**/
+	private String saleLogo;
+	
+	
+	
+	
+
+
+
+
+
 	/** 产品类型* */
 	private ProductType type;
 	
@@ -392,6 +417,19 @@ public class ProductInfo implements Serializable {
 	}
 
 	public void setStyles(Set<ProductStyle> styles) {
+		
+		//获取第一张图片路径赋值showStyle
+		if(styles!=null){
+			for(Iterator<ProductStyle> it = styles.iterator();  it.hasNext(); )
+	        {             
+				ProductStyle style = it.next();
+				if(style!=null){
+					   String image = style.getImages().split(";")[0];
+					   setShowStyle(image);
+				}
+	        } 
+		}
+		
 		this.styles = styles;
 	}
 
@@ -418,6 +456,43 @@ public class ProductInfo implements Serializable {
 			style.setProduct(this);
 		}
 	}
+	
+	
+	
+
+	
+	
+	@Transient
+	public String getShowStyle() {
+		
+		
+		return showStyle;
+	}
+	
+	
+
+	public void setShowStyle(String showStyle) {
+		this.showStyle = showStyle;
+	}
+
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+	
+	public String getSaleLogo() {
+		return saleLogo;
+	}
+
+	public void setSaleLogo(String saleLogo) {
+		this.saleLogo = saleLogo;
+	}
+
+	
 
 	@Override
 	public int hashCode() {

@@ -126,7 +126,11 @@ public class BaseDao<T> implements IBaseDao<T> {
 				if(val instanceof Collection) {
 					//查询条件是列表
 					query.setParameterList(key, (Collection)val);
-				} else {
+				}
+				/*else if(val instanceof Object[]){  
+                    query.setParameterList(key, (Object[])val);  
+                }*/
+				else {
 					query.setParameter(key, val);
 				}
 			}

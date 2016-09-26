@@ -1,11 +1,15 @@
 package org.shiyao.lemon.service.product.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.shiyao.lemon.dao.product.ProductInfoDao;
+import org.shiyao.lemon.dao.product.ProductTypeDao;
 import org.shiyao.lemon.model.Pager;
 import org.shiyao.lemon.model.product.ProductInfo;
 import org.shiyao.lemon.service.product.ProductInfoService;
@@ -19,6 +23,12 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
 	@Resource
 	private ProductInfoDao productInfoDao;
+	
+	
+	@Resource
+	private ProductTypeDao productTypeDao;
+	
+	
 	
 	
 	@Override
@@ -62,10 +72,25 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	
 	
 	
-	public Pager<ProductInfo> findByType(Long productType){
+	/**
+	 * TODO 性能有问题
+	 */
+	@Override
+	public Pager<ProductInfo> findByTypes(Integer typeid){
+		
+		List<Integer> typeids = productTypeDao.getSubTypeids(new ArrayList<Integer>(), Arrays.asList(typeid));
+		
+		typeids.add(typeid);
+		
+		System.out.println("typeids - "+JSON.toJSONString(typeids));
+		
+		Pager<ProductInfo> productInfos = productInfoDao.findByType(typeids);
+		
+		System.out.println("productInfos - "+JSON.toJSONString(productInfos));
 		
 		
-		return null;
+		
+		return productInfos;
 	}
 	
 	

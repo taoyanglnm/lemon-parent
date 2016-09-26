@@ -2,6 +2,8 @@ package org.shiyao.lemon.controller.product;
 
 import javax.annotation.Resource;
 
+import org.shiyao.lemon.model.Pager;
+import org.shiyao.lemon.model.product.ProductInfo;
 import org.shiyao.lemon.service.product.ProductInfoService;
 import org.shiyao.lemon.service.product.ProductTypeService;
 import org.slf4j.Logger;
@@ -43,17 +45,18 @@ public class SearchController {
 
 	
 	@RequestMapping("/catalog/{productType}")
-	public ModelAndView catalog(@PathVariable("productType") Long productType){
+	public ModelAndView catalog(@PathVariable("productType") Integer typeid){
 		//查询类别列表
 		//查询商品列表
 		
-		logger.debug("productType - "+productType);
-		
-		ModelAndView mv = new ModelAndView("/product/list");
+		logger.debug("productType - "+typeid);
 		
 		
+		Pager<ProductInfo> pager = productInfoService.findByTypes(typeid);
 		
 		
+		ModelAndView mv = new ModelAndView("/product/product-list","pager",pager);
+	
 		return mv;
 	}
 	
@@ -65,7 +68,7 @@ public class SearchController {
 	public ModelAndView goods(@PathVariable("searchKey") String searchKey){
 		
 		
-        ModelAndView mv = new ModelAndView("/product/list");
+        ModelAndView mv = new ModelAndView("/product/product-list");
 		
         mv.getModel().put("message", searchKey);
         

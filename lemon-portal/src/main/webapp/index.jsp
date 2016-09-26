@@ -13,6 +13,6 @@
 </head>
 <body>
 
-<a href="${ctx}/home">product list</a>
+<a href="${ctx}/search//catalog/1">product ist</a>
 </body>
 </html>
