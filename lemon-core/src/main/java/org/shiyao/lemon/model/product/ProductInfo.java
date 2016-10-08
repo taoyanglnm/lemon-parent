@@ -95,11 +95,6 @@ public class ProductInfo implements Serializable {
 	/** 商品名称logo 在产品名称前面展示**/
 	private String saleLogo;
 	
-	
-	
-	
-
-
 
 
 
@@ -121,15 +116,14 @@ public class ProductInfo implements Serializable {
 	/** 购买说明* */
 	//private String buyExplain;
 	
-	/** 产品介绍, 主要做一些文字说明* */
-	@NotEmpty(message = "不能为空")
+	/** 产品介绍, 主要做一些文字说明，显示时，如果为空，则用是商品名称* */
 	private String introduction;
 	/** 产品详情，主要展示一些图片* */
-	//private String details;
+	private String details;
 	/** 使用方法- 购买说明* */
-	//private String usage;
+	private String usage;
 	/** 商品实拍，主要展示一些自己拍的图片* */
-	//private String photos;
+	private String photos;
 	/** 运费   如果是零，即免运费 * */
 	private Float freight;
 	
@@ -137,9 +131,16 @@ public class ProductInfo implements Serializable {
 	private Set<ProductModel> models = new HashSet<ProductModel>();
 	
 	
-	/** 商品型号    接收页面传过来的字符串  临时字段 对应models* */
+	/**临时字段:   商品型号    接收页面传过来的字符串   对应models* */
 	private String model;
 
+	
+	/**
+	 * 产品参数
+	 */
+	private Set<ProductSpecial> specials = new HashSet<ProductSpecial>();
+	
+	
 	
 	@Transient
 	public String getModel() {
@@ -293,7 +294,7 @@ public class ProductInfo implements Serializable {
 		this.introduction = introduction;
 	}
 
-/*	@Lob
+	@Lob
 	@Column(nullable = false)
 	public String getDetails() {
 		return details;
@@ -301,19 +302,19 @@ public class ProductInfo implements Serializable {
 
 	public void setDetails(String details) {
 		this.details = details;
-	}*/
+	}
 
-/*	@Lob
-	@Column(nullable = true)
+	@Lob
+	@Column(nullable = true,name="_usage")
 	public String getUsage() {
 		return usage;
 	}
 
 	public void setUsage(String usage) {
 		this.usage = usage;
-	}*/
+	}
 	
-/*	@Lob
+	@Lob
 	@Column(nullable = true)
 	public String getPhotos() {
 		return photos;
@@ -321,7 +322,7 @@ public class ProductInfo implements Serializable {
 
 	public void setPhotos(String photos) {
 		this.photos = photos;
-	}*/
+	}
 
 
 
@@ -336,6 +337,15 @@ public class ProductInfo implements Serializable {
 		this.models = models;
 	}
 	
+	@OneToMany(cascade = {CascadeType.REMOVE,CascadeType.PERSIST}, mappedBy = "product")
+	public Set<ProductSpecial> getSpecial() {
+		return specials;
+	}
+
+	public void setSpecial(Set<ProductSpecial> specials) {
+		this.specials = specials;
+	}
+
 	public Float getFreight() {
 		return freight;
 	}
