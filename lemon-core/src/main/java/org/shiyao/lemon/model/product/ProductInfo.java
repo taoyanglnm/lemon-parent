@@ -88,11 +88,11 @@ public class ProductInfo implements Serializable {
 
 	
 	
-	/** 商品品牌logo  在图片左上角展示 * */
+	/** TODO 商品品牌logo  在图片左上角展示 * */
 	private String logo;
 	
 	
-	/** 商品名称logo 在产品名称前面展示**/
+	/**TODO 商品名称logo 在产品名称前面展示**/
 	private String saleLogo;
 	
 
@@ -103,8 +103,8 @@ public class ProductInfo implements Serializable {
 	
 	
   /*	
-            商品详情 也可以集成在一个字段
-        产品介绍：product introduction
+    商品详情 也可以集成在一个字段
+    产品介绍：product introduction
 	产品参数：product parameters
 	产品详情：product details
 	使用方法：product usage

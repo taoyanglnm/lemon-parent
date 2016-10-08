@@ -66,6 +66,8 @@ JM.$HIDEMARKETPRICE= false;
         var c = '<li class="signin">欢迎您，<span class="col_jumei"><a target="_blank">' + l + ' </a></span> [ <a class="signout" href="">退出</a> ]</li>';
         $("#headerTopLeft").html(c)
          -->
+         
+         
         <!--login-->
         <ul class="header_top_left" id="headerTopLeft">
             <li>欢迎来到jumei！</li>
@@ -550,9 +552,7 @@ JM.$HIDEMARKETPRICE= false;
                 <a class="genuine" href="#" target="_blank" title="正品保障"></a>
                 <a class="red_bag" href="#" target="_blank" title="支持聚美红包"></a>
             </div>
-            
-    
-       </div>
+         </div>
         
         
         

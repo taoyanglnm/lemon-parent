@@ -247,7 +247,7 @@
 								   							   
 								   
 								   <div class="form-group"> 
-								      <label for="introduction" class="col-md-1 control-label">产品介绍</label>
+								      <label for="introduction" class="col-md-1 control-label">商品介绍</label>
 								      <div class="col-md-10">
 								         <form:textarea id="introduction" path="introduction" rows="20" maxlength="200" />
 				                         <script type="text/javascript">
@@ -257,9 +257,50 @@
 								      </div>
 								   </div>
 									
-														
+									
+									
+								   <div class="form-group"> 
+								      <label for="special" class="col-md-1 control-label">商品参数</label>
+                                      <div class="col-sm-3">
+								         <input name="special" id="special" class="form-control" type="text"  placeholder="领型/低圆领;">
+								         
+								         <form:errors path="special" cssStyle="color:red"/>
+								      </div>
+								   </div>
+											
+											
+								  <div class="form-group"> 
+								      <label for="details" class="col-md-1 control-label">商品详情</label>
+								      <div class="col-md-10">
+								         <form:textarea id="details" path="details" rows="20" maxlength="200" />
+				                         <script type="text/javascript">
+				                         var editor = CKEDITOR.replace("details");
+				                         </script>
+								      </div>
+								   </div>			
 									
 								 
+								 <div class="form-group"> 
+								      <label for="usage" class="col-md-1 control-label">使用方法</label>
+								      <div class="col-md-10">
+								         <form:textarea id="usage" path="usage" rows="20" maxlength="200" />
+				                         <script type="text/javascript">
+				                         var editor = CKEDITOR.replace("usage");
+				                         </script>
+								      </div>
+								  </div>	
+								   
+								   
+								 <div class="form-group"> 
+								      <label for="photos" class="col-md-1 control-label">商品实拍</label>
+								      <div class="col-md-10">
+								         <form:textarea id="photos" path="photos" rows="20" maxlength="200" />
+				                         <script type="text/javascript">
+				                         var editor = CKEDITOR.replace("photos");
+				                         </script>
+								      </div>
+								  </div>	
+								   
                                   
 								   <div class="form-group">
 								      <div class="col-sm-offset-1 col-sm-5">
