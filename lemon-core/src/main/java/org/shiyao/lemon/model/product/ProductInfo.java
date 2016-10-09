@@ -140,6 +140,9 @@ public class ProductInfo implements Serializable {
 	 */
 	private Set<ProductSpecial> specials = new HashSet<ProductSpecial>();
 	
+	/** 临时字段 * */
+	private String special;
+	
 	
 	
 	@Transient
@@ -165,7 +168,28 @@ public class ProductInfo implements Serializable {
 	}
 	
 	
-
+	@Transient
+	public String getSpecial() {
+		return special;
+	}
+	
+	public void setSpecial(String special) {
+		if(StringUtils.hasText(special)){
+			String[] nvs = special.split(";");
+			for(String nv : nvs){
+				String[] si = nv.split("/");
+				if(si.length==2){
+					String n = si[0];
+					String v = si[1];
+					ProductSpecial param  = new ProductSpecial(n,v);
+					specials.add(param);
+				}				
+			}	
+		}
+		
+		this.special = special;
+	}
+	
 	
 	
 
@@ -338,11 +362,11 @@ public class ProductInfo implements Serializable {
 	}
 	
 	@OneToMany(cascade = {CascadeType.REMOVE,CascadeType.PERSIST}, mappedBy = "product")
-	public Set<ProductSpecial> getSpecial() {
+	public Set<ProductSpecial> getSpecials() {
 		return specials;
 	}
 
-	public void setSpecial(Set<ProductSpecial> specials) {
+	public void setSpecials(Set<ProductSpecial> specials) {
 		this.specials = specials;
 	}
 

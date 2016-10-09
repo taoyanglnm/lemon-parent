@@ -16,11 +16,13 @@ import org.shiyao.lemon.model.Pager;
 import org.shiyao.lemon.model.product.Brand;
 import org.shiyao.lemon.model.product.ProductInfo;
 import org.shiyao.lemon.model.product.ProductModel;
+import org.shiyao.lemon.model.product.ProductSpecial;
 import org.shiyao.lemon.model.product.ProductStyle;
 import org.shiyao.lemon.model.product.ProductType;
 import org.shiyao.lemon.service.product.BrandService;
 import org.shiyao.lemon.service.product.ProductInfoService;
 import org.shiyao.lemon.service.product.ProductModelService;
+import org.shiyao.lemon.service.product.ProductSpecialService;
 import org.shiyao.lemon.service.product.ProductStyleService;
 import org.shiyao.lemon.service.product.ProductTypeService;
 import org.slf4j.Logger;
@@ -67,6 +69,9 @@ public class ProductInfoController {
 	@Resource
 	private ProductStyleService  productStyleService;
 	
+	
+	@Resource
+	private ProductSpecialService productSpecialService;
 	
 	
 	/**
@@ -123,7 +128,7 @@ public class ProductInfoController {
 		 
 		 Set<ProductModel> models = productInfo.getModels();
 		 ProductType productType = productInfo.getType();	
-		 
+		 Set<ProductSpecial> specials = productInfo.getSpecials();
 		 
 		  productInfo = productInfoService.save(productInfo);
 		  
@@ -132,6 +137,12 @@ public class ProductInfoController {
 			  productModel.setProduct(productInfo);
 			  productModelService.save(productModel);
 		  }
+		  
+		  for(ProductSpecial productSpecial :specials ){
+			  productSpecial.setProduct(productInfo);
+			  productSpecialService.save(productSpecial);
+		  }
+		  
 		
 		  
 		  Long productId = productInfo.getId();

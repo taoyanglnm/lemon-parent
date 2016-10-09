@@ -26,6 +26,18 @@ public class ProductSpecial {
 	private ProductInfo product;
 	
 	
+	
+	
+	public ProductSpecial() {}
+
+	public ProductSpecial(String name, String value) {
+		super();
+		this.name = name;
+		this.value = value;
+	}
+	
+	
+	
 
 	@Id
 	@GeneratedValue
