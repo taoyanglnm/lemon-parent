@@ -28,6 +28,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.shiyao.lemon.model.Gender;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 产品信息
  * @author tao.yang
@@ -186,7 +188,6 @@ public class ProductInfo implements Serializable {
 				}				
 			}	
 		}
-		
 		this.special = special;
 	}
 	

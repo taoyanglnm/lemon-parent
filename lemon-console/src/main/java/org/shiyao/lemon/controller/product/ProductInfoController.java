@@ -138,7 +138,9 @@ public class ProductInfoController {
 			  productModelService.save(productModel);
 		  }
 		  
-		  for(ProductSpecial productSpecial :specials ){
+		  
+		  
+		  for(ProductSpecial productSpecial : specials){
 			  productSpecial.setProduct(productInfo);
 			  productSpecialService.save(productSpecial);
 		  }
@@ -159,10 +161,10 @@ public class ProductInfoController {
 	            	 
 	            }else{  	            	
 	            	
-	                String realPath = request.getSession().getServletContext().getRealPath(imgctx);
-	                String imagePath = typeid+"/"+productId+"/prototype/"+Sequence.date()+getFileSuffix(myfile.getOriginalFilename());
+	                 String realPath = request.getSession().getServletContext().getRealPath(imgctx);
+	                 String imagePath = typeid+"/"+productId+"/prototype/"+Sequence.date()+getFileSuffix(myfile.getOriginalFilename());
 	                
-	                FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath, imagePath));  
+	                 FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath, imagePath));  
 	                
 	                 image+=imgctx+imagePath+";";
 	            	
@@ -171,7 +173,7 @@ public class ProductInfoController {
 	            	 logger.debug("文件名称: " + myfile.getName());  
 	            	 logger.debug("文件原名: " + myfile.getOriginalFilename());
 	                 logger.debug("文件保存: " +imgctx+imagePath);
-	                 logger.debug("========================================");  
+	                 logger.debug("========================================"); 
 	                
 	                
 	               

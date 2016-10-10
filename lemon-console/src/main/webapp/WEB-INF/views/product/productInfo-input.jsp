@@ -262,8 +262,7 @@
 								   <div class="form-group"> 
 								      <label for="special" class="col-md-1 control-label">商品参数</label>
                                       <div class="col-sm-3">
-								         <input name="special" id="special" class="form-control" type="text"  placeholder="领型/低圆领;">
-								         
+								         <form:input type="text" class="form-control" id="special" path="special" placeholder="领型/低圆领;"/>
 								         <form:errors path="special" cssStyle="color:red"/>
 								      </div>
 								   </div>
@@ -335,6 +334,7 @@
                                     <div class="modal-body">
                                        
                                         <form class="form-horizontal" role="form">
+                                        
                                             <div class="form-group"> 
                                             
                                              <c:forEach items="${productTypes}" var="productType">
@@ -346,12 +346,7 @@
                                              </c:forEach>
                                              
                                             </div>
-                                            
-                                            <div class="form-group">
-                                                <div class="col-lg-offset-2 col-lg-10">
-                                                    <button type="submit" class="btn btn-default">确定</button>
-                                                </div>
-                                            </div>
+                                           
                                         </form>
 
                                     </div>
