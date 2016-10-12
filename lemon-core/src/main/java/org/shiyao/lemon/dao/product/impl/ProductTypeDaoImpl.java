@@ -166,5 +166,18 @@ public class ProductTypeDaoImpl extends BaseDao<ProductType> implements	ProductT
 		
 		return result;
 	}
+	
+	
+	/**
+	 * 获取当前类别的父类别
+	 * @param id
+	 * @return
+	 */
+	public List<ProductType> getParentType(Integer id){
+		
+		return null;
+		
+	}
+	
 
 }
