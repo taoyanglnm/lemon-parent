@@ -28,7 +28,7 @@
     <!-- 放到页面尾好像不能显示 -->
     <script src="${ctx}/static/ckeditor/ckeditor.js"></script>
     <script src="${ctx}/static/ckfinder/ckfinder.js"></script>
-    
+    <script src="${ctx}/static/ckfinder/ck.js"></script>
     
     
     <style type="text/css">
@@ -65,7 +65,7 @@
 								  
 								  
 								   <div class="form-group"> 
-								      <label for="code" class="col-md-1 control-label">货号</label>
+								      <label for="code" class="col-md-1 control-label">编号</label>
 								      <div class="col-sm-3">
 								         <form:input type="text" class="form-control" id="code" path="code"/>
 								         <form:errors path="code" cssStyle="color:red"/>
@@ -88,7 +88,7 @@
 								          <form:select path="brand.code" class="form-control" >  
 								            <form:option value="-" label="--Please Select"/>  
 								            <form:options items="${brands}" itemValue="code" itemLabel="name"/>  
-								        </form:select>  
+								          </form:select>  
 								      </div>
 								   </div>
 								   
@@ -179,7 +179,6 @@
 								  <div class="form-group"> 
 								      <label for="model" class="col-md-1 control-label">型号</label>
 								      <div class="col-sm-3">
-								        <%-- <input class="form-control m-bot15" type="text" placeholder="尺码/库存数;" name="model" value="${productInfo.model}"> --%>
 								        <form:input type="text" class="form-control" id="model" path="model" placeholder="尺码/库存数;"/>
 								      </div>
 								   </div>
@@ -190,11 +189,12 @@
 								  <div class="form-group"> 
 								      <label for="type.typeid" class="col-md-1 control-label">类别</label>
 								      <div class="col-sm-3">
-                                           <form:input class="form-control m-bot15" type="text"  path="type.name" id="productTypeName" readonly="true"/> 
+                                           <form:input class="form-control m-bot15" type="text"  path="type.name" id="productTypeName" readonly="true"/>
                                            <form:input type="hidden" class="form-control" id="productTypeId" path="type.typeid"/>
                                            <a href="#myModal-1" data-toggle="modal" class="btn btn-xs btn-warning" >
                                             &nbsp;选 择...&nbsp;
                                            </a>
+                                           <form:errors path="type.typeid" cssStyle="color:red"/> 
 								      </div>
 								   </div>
 								   
@@ -244,16 +244,13 @@
 								         							         
 								      </div>
 								  </div>
-								   							   
+								   		
+								   		
 								   
 								   <div class="form-group"> 
 								      <label for="introduction" class="col-md-1 control-label">商品介绍</label>
 								      <div class="col-md-10">
-								         <form:textarea id="introduction" path="introduction" rows="20" maxlength="200" />
-				                         <script type="text/javascript">
-				                         var editor = CKEDITOR.replace("introduction");
-				                         //CKFinder.SetupCKEditor(editor);
-				                         </script>
+								         <form:textarea id="introduction" path="introduction" rows="5" cols="100"/>
 								      </div>
 								   </div>
 									

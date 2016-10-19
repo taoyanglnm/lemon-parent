@@ -10,67 +10,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     
-    <!-- Bootstrap core CSS -->
-    <link href="${ctx}/res/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${ctx}/res/css/bootstrap-reset.css" rel="stylesheet">
-    <!--external css-->
-    <link href="${ctx}/res/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-    <link href="${ctx}/res/css/style.css" rel="stylesheet">
-    <link href="${ctx}/res/css/style-responsive.css" rel="stylesheet" />
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
-    <!--[if lt IE 9]>
-    <script src="${ctx}/res/js/html5shiv.js"></script>
-    <script src="${ctx}/res/js/respond.min.js"></script>
-    <![endif]-->
-    	
-    <!-- js placed at the end of the document so the pages load faster -->
+    
+    
     <script src="${ctx}/res/js/jquery.js"></script>
-    <script src="${ctx}/res/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/plugins/ckfinder/ckfinder.js"></script>
+    <script type="text/javascript" src="${ctx}/static/plugins/ckfinder/ck.js"></script>
+    <script type="text/javascript" src="${ctx}/static/plugins/ckeditor/ckeditor.js"></script>
     
+
+  
     
-    
-    <script src="${ctx}/static/ckeditor/ckeditor.js"></script>
-    <script src="${ctx}/static/ckfinder/ckfinder.js"></script>
-    
-    
+    <script type="text/javascript">
+       //var baseUrl="${ctx}/static/plugins";
+       var baseUrl='http://localhost:8083/lemon-file/static';
+       //var baseUrl="http://localhost:8083/lemon-file/static/plugins";
+      
+     </script>
   </head>  
     
-  <body class="login-body">  
+  <body>  
  
  
-
-<form action="getContent" method="get">  
-   <textarea cols="80" id="editor1" name="editor1" rows="10"></textarea>  
-   <input type="submit" value="Submit" />  
-</form>  
-<!-- <ckfinder:setupCKEditor basePath="/lemon/static/ckfinder/" editor="editor1" />  
-<ckeditor:replace replace="editor1" basePath="/lemon/static/ckeditor/" />  
-  -->
-<%-- <ckfinder:setupCKEditor  basePath="/lemon/static/ckfinder/"  editor="editor1"/>  <!---注意：这里的sitenav为我的项目名称，请换成自己的项目名--->
-<ckeditor:replace replace="editor1" basePath="${ctx}/static/ckeditor"></ckeditor:replace>
- --%>
-
-<textarea id ="post_content" name="post_content"><p>编辑器内容</p></textarea>
-  
+<input id="mainImages" style="width: 455px;" name="mainImages" type="text" />
+<input type="button" value="浏览" onclick="browseGallery('mainImages')"/>
+ 
+<br>
+<textarea id="content" cols="80" name="content2" rows="20"></textarea>
+<textarea id="content2" cols="80" name="content2" rows="20"></textarea>
 <script type="text/javascript">
-      var editor = CKEDITOR.replace('post_content');          // 创建编辑器
-      
-      //editor.basePath="/lemon/static/ckeditor/";
-      //CKFinder.setupCKEditor(editor,"static/ckeditor/");   // 为编辑器绑定"上传控件"
-      
-      //editor.BasePath = "/lemon/static/ckfinder/";
-      //CKFinder.setupCKEditor(editor, "${ctx}/static/ckfinder/");//相对路径
+//var editor = CKEDITOR.replace("content2");
+//CKEDITOR.replace("content");
+CKEDITOR.replace( 'content2',{
+	//图片上传发送路径，returnURL为参数,到服务器后跳转回来的页面
+	filebrowserImageUploadUrl : 'http://10.0.6.200/uploadimg.php?returnURL=http://localhost/pasteDemo/jump.php'		
+});
 
-		
-		
-		
-      
-      
+
+CKEDITOR.replace( 'content',
+	    {
+	        startupFocus : true,
+	        toolbar :
+	            [
+	                ['ajaxsave'],
+	                ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink' ],
+	                ['Cut','Copy','Paste','PasteText'],
+	                ['Undo','Redo','-','RemoveFormat'],
+	                ['TextColor','BGColor'],
+	                ['Maximize', 'Image']
+	            ],
+	        filebrowserUploadUrl : '/notes/add/ajax/upload-inline-image/index.cfm'
+	    }
+	);
+
 </script>
-
-	
 
 
   </body>  

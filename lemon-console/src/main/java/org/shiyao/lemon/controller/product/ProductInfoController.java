@@ -116,22 +116,44 @@ public class ProductInfoController {
 		
 		
 	 @RequestMapping(method=RequestMethod.POST)  
-	 public ModelAndView create(@Valid ProductInfo productInfo,BindingResult bindingResult,
-			 @RequestParam(value = "images", required = false) MultipartFile[] images,HttpServletRequest request,Model model) throws IOException{
+	 public ModelAndView create(@Valid ProductInfo productInfo,
+			                     BindingResult bindingResult,
+			                    @RequestParam(value = "images") MultipartFile[] images,
+			                    HttpServletRequest request,Model model) throws IOException{
 		 
-		 logger.debug("保存新增产品");
+		  logger.debug("保存新增产品");
 		 
-		  if (bindingResult.hasErrors()){
-			  return new ModelAndView("/product/productInfo-input");
+		  String image ="";
+		  ProductType productType = productInfo.getType();	
+		  Set<ProductModel> models = productInfo.getModels();
+	      Set<ProductSpecial> specials = productInfo.getSpecials();
+	      Brand brand = productInfo.getBrand();
+	      Integer typeid = productType.getTypeid();
+	      System.out.println("------brand"+brand);
+	      if(typeid==null){
+			  //rejectValue(String field, String errorCode, Object[] errorArgs, String defaultMessage)
+			  bindingResult.rejectValue("type.typeid", "entity.missing","The above field must not be empty."); 
 		  }
-		 
-		 
-		 Set<ProductModel> models = productInfo.getModels();
-		 ProductType productType = productInfo.getType();	
-		 Set<ProductSpecial> specials = productInfo.getSpecials();
-		 
+	      
+	      if(brand.getCode()==null){
+	    	  productInfo.setBrand(null);
+		  }
+	      
+	         
+	         
+		  if (bindingResult.hasErrors()){
+			     List<Brand> brands = brandService.getBrands();
+				 model.addAttribute("brands", brands);
+				 List<ProductType> productTypes = productTypeService.findAll();
+				 model.addAttribute("productTypes", productTypes);
+			     return new ModelAndView("/product/productInfo-input");
+		  }
+
+
 		  productInfo = productInfoService.save(productInfo);
 		  
+		  Long productId = productInfo.getId();
+		 
 		  
 		  for(ProductModel productModel :models ){
 			  productModel.setProduct(productInfo);
@@ -147,45 +169,37 @@ public class ProductInfoController {
 		  
 		
 		  
-		  Long productId = productInfo.getId();
-		  Integer typeid = productType.getTypeid();
-		  String image ="";
-		 
+		  if(images!=null){
+			  for(MultipartFile myfile : images){  
+		            if(myfile.isEmpty()){  
+		            	 logger.error("没有产品样式图片");  
+		            	 
+		            }else{  	            	
+		                 String realPath = request.getSession().getServletContext().getRealPath(imgctx);
+		                 String imagePath = typeid+"/"+productId+"/prototype/"+Sequence.date()+getFileSuffix(myfile.getOriginalFilename());
+		                
+		                 FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath, imagePath));  
+		                
+		                 image+=imgctx+imagePath+";";
+		            	
+		            	 logger.debug("文件长度: " + myfile.getSize());  
+		            	 logger.debug("文件类型: " + myfile.getContentType());  
+		            	 logger.debug("文件名称: " + myfile.getName());  
+		            	 logger.debug("文件原名: " + myfile.getOriginalFilename());
+		                 logger.debug("文件保存: " +imgctx+imagePath);
+		                 logger.debug("========================================"); 
+		            }  
+		        }
+		  }
+		  
+		  if(!"".equals(image)){
+			  ProductStyle   productStyle = new ProductStyle();
+			  productStyle.setImages(image);
+			  productStyle.setProduct(productInfo);
+			  productStyleService.save(productStyle);	
+		  }
 		  
 		  
-		  for(MultipartFile myfile : images){  
-	            if(myfile.isEmpty()){  
-	            	 logger.error("没有产品样式图片");  
-	            	 
-	            	 
-	            	 
-	            }else{  	            	
-	            	
-	                 String realPath = request.getSession().getServletContext().getRealPath(imgctx);
-	                 String imagePath = typeid+"/"+productId+"/prototype/"+Sequence.date()+getFileSuffix(myfile.getOriginalFilename());
-	                
-	                 FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath, imagePath));  
-	                
-	                 image+=imgctx+imagePath+";";
-	            	
-	            	 logger.debug("文件长度: " + myfile.getSize());  
-	            	 logger.debug("文件类型: " + myfile.getContentType());  
-	            	 logger.debug("文件名称: " + myfile.getName());  
-	            	 logger.debug("文件原名: " + myfile.getOriginalFilename());
-	                 logger.debug("文件保存: " +imgctx+imagePath);
-	                 logger.debug("========================================"); 
-	                
-	                
-	               
-	            }  
-	        }
-	
-		  
-		  ProductStyle   productStyle = new ProductStyle();
-		  productStyle.setImages(image);
-		  productStyle.setProduct(productInfo);
-		  
-		  productStyleService.save(productStyle);		  
 		  
 		 return new ModelAndView("redirect:/productInfo");
 	 }

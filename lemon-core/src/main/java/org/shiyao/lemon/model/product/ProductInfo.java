@@ -24,6 +24,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.shiyao.lemon.model.Gender;
 import org.springframework.util.StringUtils;
@@ -36,6 +38,8 @@ import com.alibaba.fastjson.JSON;
  *
  */
 @Entity
+//在指定那些常用的改动小的内容少的对象放入二级缓存中
+//@Cache(usage=CacheConcurrencyStrategy.READ_ONLY,region="")
 public class ProductInfo implements Serializable {
 
 	private static final long serialVersionUID = 7285467881441102644L;
@@ -237,8 +241,8 @@ public class ProductInfo implements Serializable {
 		this.name = name;
 	}
 
-	@ManyToOne(cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "brandid")
+	@ManyToOne(cascade = CascadeType.REFRESH,optional=true)
+	@JoinColumn(name = "brandid",nullable = true)
 	public Brand getBrand() {
 		return brand;
 	}
@@ -310,7 +314,7 @@ public class ProductInfo implements Serializable {
 		this.buyExplain = buyExplain;
 	}*/
 
-	@Lob
+	//@Lob
     public String getIntroduction() {
 		return introduction;
 	}
